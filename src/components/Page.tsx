@@ -99,6 +99,23 @@ const Page: React.FC = () => {
     } catch {}
   }, [loaded]);
 
+  // --- NEW: scroll to top when the projects are ready (preloader ended)
+  useEffect(() => {
+    if (!loaded) return;
+    // instant top (no jank) — change behavior to 'smooth' if you want a smooth ride
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [loaded]);
+
+  // helper to scroll to top (used on click before navigation)
+  const scrollToTop = (options: ScrollToOptions = { top: 0, left: 0, behavior: "smooth" }) => {
+    try {
+      window.scrollTo(options);
+    } catch {
+      // fallback
+      window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white antialiased">
       {/* SOLID preloader (no transparency) */}
@@ -169,6 +186,13 @@ const Page: React.FC = () => {
                       href={p.liveUrl}
                       target="_blank"
                       rel="noreferrer"
+                      // NEW: scroll to top before going to the project's live URL
+                      onClick={(e) => {
+                        // scroll to top visually before navigation
+                        scrollToTop({ top: 0, left: 0, behavior: "smooth" });
+                        // if you prefer instant jump, use: window.scrollTo(0,0);
+                        // allow the click to proceed (don't call preventDefault)
+                      }}
                       className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 transition px-4 py-2 rounded-full text-sm font-semibold"
                     >
                       View Project <ExternalLink className="w-3 h-3" />
