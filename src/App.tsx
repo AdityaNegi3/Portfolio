@@ -12,7 +12,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 // pages
-import Page from "./components/page"; // adjust path if your page.tsx is elsewhere
+import Page from "./components/Page"; // adjust path if your page.tsx is elsewhere
 
 function App() {
   return (
