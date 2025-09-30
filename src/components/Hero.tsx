@@ -292,15 +292,21 @@ const Hero: React.FC = () => {
   };
 
   /* -------------------------
-     Scroll to about (native)
+     Scroll helpers
      ------------------------- */
-  const scrollToAbout = () => {
-    const element = document.getElementById('about');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const scrollToAbout = () => scrollToSection('about');
+  const scrollToProjects = () => scrollToSection('projects');
+  const scrollToContact = () => scrollToSection('contact');
+
+  /* -------------------------
+     Links
+     ------------------------- */
   const githubUrl = 'https://github.com/AdityaNegi3';
   const linkedinUrl = 'https://www.linkedin.com/in/adityanegi03/';
   const mailTo = 'mailto:adi.negi730@gmail.com';
@@ -392,7 +398,7 @@ const Hero: React.FC = () => {
         className="absolute inset-0 z-0"
       >
         <LiquidEther
-          colors={['#ff1a1a', '#e60000', '#990000']} // bright red -> red -> dark red
+          colors={["#ff1a1a", "#e60000", "#990000"]} // bright red -> red -> dark red
           mouseForce={28}
           cursorSize={120}
           isViscous={false}
@@ -452,21 +458,27 @@ const Hero: React.FC = () => {
           </p>
 
           <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-10 opacity-0 w-full">
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* "View My Work" now scrolls to Projects.tsx (element with id="projects") */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToProjects();
+              }}
               className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-black font-semibold shadow-2xl hover:scale-103 transition-transform duration-200"
             >
               View My Work
-            </a>
+            </button>
 
-            <a
-              href={mailTo}
+            {/* "Get In Touch" now scrolls to Contact.tsx (element with id="contact") */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToContact();
+              }}
               className="w-full sm:w-auto px-6 py-3 rounded-full border-2 border-red-600 text-red-300 font-semibold hover:bg-red-600 hover:text-black transition-colors duration-200 text-center"
             >
               Get In Touch
-            </a>
+            </button>
           </div>
 
           <div ref={socialIconsRef} className="flex justify-center gap-3 mb-6 opacity-0">
